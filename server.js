@@ -1,17 +1,23 @@
 import express from "express";
 import apiRoutes from "./routes/apiRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import RoomRoutes from "./routes/RoomRoutes.js";
 import { connectDB } from "./configs/db.js";
 import dotenv from 'dotenv';
+import cors from "cors";
+import bodyParser from "body-parser";
 dotenv.config();
 const app = express();
 
 
 app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 connectDB();
 app.use("/api/v1/user", authRoutes);
 app.use("/api/v1/user", apiRoutes);
+app.use("/api/v1/user", RoomRoutes);
 
 // Basic Error Handling Middleware (optional but recommended)
 // app.use((err, req, res, next) => {
